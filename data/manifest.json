@@ -1,0 +1,21 @@
+[
+  {
+    "file": "inventory-readme.md",
+    "title": "Inventory-demo 原项目 README 快照",
+    "version": "b2d8d93·20261011",
+    "status": "active"
+  },
+  {
+    "file": "inventory-integration.md",
+    "title": "接入范围与查询口径",
+    "version": "1.2",
+    "status": "active",
+    "updatedAt": "2026-10-12T07:37:27.695Z"
+  },
+  {
+    "file": "receipt-query-notes.md",
+    "title": "收货查询说明（本人学习笔记）",
+    "version": "1.1",
+    "status": "active"
+  }
+]

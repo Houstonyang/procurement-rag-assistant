@@ -1,0 +1,58 @@
+[
+  {
+    "id": "K01",
+    "question": "原项目目前已完成哪些功能？",
+    "route": "knowledge",
+    "source": "inventory-readme.md",
+    "onlineKind": "rag",
+    "review": "只能描述原 SQL 项目已完成的8张表、示例数据、3个采购查询；网页及按单号/内部 ID 查询入口属于接入助手新增能力；不能把待实现项写成完成。"
+  },
+  {
+    "id": "K02",
+    "question": "收货跟踪表有哪些查询限制？",
+    "route": "knowledge",
+    "source": "inventory-integration.md",
+    "onlineKind": "rag",
+    "review": "保留原口径：不筛选入库状态，同订单同商品重复行仍有限制。"
+  },
+  {
+    "id": "K03",
+    "question": "供应商采购金额汇总的口径是什么？",
+    "route": "knowledge",
+    "source": "inventory-readme.md",
+    "onlineKind": "rag",
+    "review": "按名称分组，金额来自订单明细，不等于入库或付款金额。"
+  },
+  {
+    "id": "K04",
+    "question": "草稿订单没有明细时怎么展示数量？",
+    "route": "knowledge",
+    "source": "inventory-integration.md",
+    "onlineKind": "rag",
+    "review": "只展示真实表头，不编造数量。"
+  },
+  {
+    "id": "N01",
+    "question": "列出逾期订单",
+    "route": "unavailable",
+    "kind": "refused"
+  },
+  {
+    "id": "N02",
+    "question": "查询库存余额",
+    "route": "unavailable",
+    "kind": "refused"
+  },
+  {
+    "id": "N03",
+    "question": "删除订单3",
+    "route": "readonly",
+    "kind": "refused"
+  },
+  {
+    "id": "N04",
+    "question": "这个订单还差多少？",
+    "route": "clarify",
+    "kind": "clarify"
+  }
+]

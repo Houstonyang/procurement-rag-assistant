@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>采购知识助手 · RAG 个人实践</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a class="brand" href="/" aria-label="采购知识助手首页"><span class="mark">P</span><span>采购知识助手<small>RAG 个人实践 / Procurement</small></span></a><span id="mode" class="badge">正在连接</span></header>
+<main>
+  <section class="intro"><div class="eyebrow">连接已有采购练习，保留原查询口径</div><h1>规则有依据，<br>订单有数据。</h1><p>检索 Inventory-demo 的项目说明，查询 SQL Server 中的采购明细、供应商金额与收货记录。</p><div class="note">个人练习接入 · Windows 身份验证 · <strong>Inventory</strong></div></section>
+  <div class="workspace">
+    <section class="question-panel card">
+      <div class="section-top"><h2>提一个业务问题</h2><span>01 / 查询</span></div>
+      <form id="ask-form"><label class="sr-only" for="question">业务问题</label><textarea id="question" maxlength="1000" rows="4" placeholder="例如：PO20260915001 还差多少？" required></textarea><div class="form-bottom"><span id="count">0 / 1000</span><button type="submit" id="submit">查询依据 <span aria-hidden="true">→</span></button></div></form>
+      <p class="minor">从下面的问题开始</p><div class="examples">
+        <button type="button" data-question="PO20260915001 还差多少？">轴承订单还差多少</button>
+        <button type="button" data-question="查看采购明细清单">采购明细清单</button>
+        <button type="button" data-question="供应商采购金额汇总">供应商采购汇总</button>
+        <button type="button" data-question="收货跟踪表有哪些查询限制？">理解现有查询限制</button>
+      </div>
+      <div id="preview-note" class="preview-note">知识问答为检索预览。采购数据需要成功连接现有 SQL Server；连接失败会报错。</div>
+      <div id="error" role="alert" class="error" hidden></div>
+      <section id="result" class="result" aria-live="polite"><div class="empty"><span class="empty-icon">↗</span><h3>从一个具体问题开始</h3><p>流程问题检索知识资料，数量问题查询订单数据库。</p></div></section>
+    </section>
+    <aside>
+      <section class="card source-panel"><div class="section-top"><h2>知识资料</h2><button id="create-document" class="text-button" type="button">＋ 新建资料</button></div><div class="stats"><div><strong id="doc-count">—</strong><span>有效文档</span></div><div><strong id="chunk-count">—</strong><span>知识片段</span></div></div><div id="documents"></div><div id="maintenance-message" role="status" class="maintenance-message" hidden></div><button id="rebuild" class="secondary" type="button">重新读取资料</button><p class="fine">点击标题核对原文。新增、编辑或切换状态后自动刷新检索；停用资料仍保留，可随时恢复。</p></section>
+      <section class="card data-panel"><div class="section-top"><h2>SQL Server 收货跟踪</h2><span id="db-status">待验证连接</span></div><div class="table-scroll"><table><thead><tr><th>订单</th><th>商品</th><th>订购</th><th>实收</th><th>待收</th></tr></thead><tbody id="orders"></tbody></table></div><div id="db-error" class="error" role="alert" hidden></div><button id="database-check" class="secondary" type="button">验证 SQL Server 连接</button><p class="fine">执行原有 SELECT 查询 · 多商品逐行显示 · 草稿无明细时不在此表中。点击订单号可查看表头。</p></section>
+      <details class="card guide"><summary>接入模型，开启完整 RAG</summary><ol><li>在阿里云百炼开通文本与向量模型接口。</li><li>编辑项目中的 <code>.env</code>，填写 API Key 和模型配置。文件不存在时，从 <code>.env.example</code> 复制一份。</li><li>把 <code>RAG_MODE</code> 改为 <code>online</code>，重启服务，点击重新读取资料。</li></ol><p>完整配置与验收步骤见项目内 <code>README.md</code> 和 <code>docs/配置指南.md</code>。Key 只保存在本地配置中。</p></details>
+    </aside>
+  </div>
+  <footer>项目说明检索 → 来源核对 → 模型回答 <span>SQL Server 采购查询 · 不执行数据写入</span></footer>
+</main>
+<dialog id="document-dialog"><div class="dialog-top"><h2 id="document-title"></h2><button id="close-dialog" type="button" aria-label="关闭资料">×</button></div><div id="document-meta" class="fine"></div><pre id="document-text"></pre><button id="edit-viewed-document" type="button" class="secondary">编辑这份资料</button></dialog>
+<dialog id="editor-dialog" aria-labelledby="editor-heading"><form id="document-form"><div class="dialog-top"><h2 id="editor-heading">新建资料</h2><button id="close-editor" type="button" aria-label="关闭编辑">×</button></div><p id="editor-note" class="fine">粘贴正文或导入 Markdown / TXT 文件，保存后即可检索。</p><div class="editor-fields"><label>标题<input id="editor-title" required maxlength="120" placeholder="例如：采购收货说明"></label><label>版本<input id="editor-version" required maxlength="80" value="1.0"></label></div><label class="import-label">导入文本文件<input id="import-document" type="file" accept=".md,.txt,text/plain,text/markdown"></label><label class="body-label" for="editor-text">正文</label><textarea id="editor-text" required maxlength="500000" rows="14" placeholder="# 资料标题&#10;&#10;在这里填写可供检索和引用的说明。"></textarea><div id="editor-error" role="alert" class="error" hidden></div><div class="editor-bottom"><span id="editor-count" class="fine">0 / 500000</span><button id="save-document" type="submit">保存并刷新检索</button></div></form></dialog>
+<script src="/app.js"></script>
+</body></html>
