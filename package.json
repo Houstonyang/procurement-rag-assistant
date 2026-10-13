@@ -1,0 +1,20 @@
+{
+  "name": "procurement-rag-demo",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "description": "Inventory-demo 采购 SQL Server 查询与资料问答：个人学习实践",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node scripts/service.mjs start",
+    "stop": "node scripts/service.mjs stop",
+    "status": "node scripts/service.mjs status",
+    "start:foreground": "node src/server.mjs",
+    "test": "node --test tests/core.test.mjs tests/documents.test.mjs tests/service.test.mjs",
+    "evaluate": "node scripts/evaluate.mjs",
+    "verify:sql": "node scripts/verify-inventory.mjs",
+    "evaluate:online": "node scripts/evaluate.mjs --online"
+  }
+}

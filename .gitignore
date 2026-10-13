@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+runtime/
+work/
+reports/
+node_modules/
+*.log
+*.zip
+*.bak
+.DS_Store
+Thumbs.db
